@@ -1,0 +1,28 @@
+const express = require("express");
+const cors = require("cors");
+const app = express();
+const compression = require("compression");
+const mongoose = require("mongoose");
+// const cookieParser = require("cookie-parser");
+const globalErrorHandler = require("./controllers/errorController");
+require("dotenv").config();
+const path = require("path");
+const serverless = require("serverless-http");
+app.use(express.json());
+app.use(express.static(`${__dirname}/public`));
+// app.use(cookieParser());
+app.use(cors());
+app.use(compression());
+const PORT = process.env.PORT || 3002;
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+const db = require("./config/database");
+app.use("/", require("./routes/router"));
+require("./routes/media.route")(app);
+require("./routes/payment.route")(app);
+require("./routes/productReview.route")(app);
+app.use(globalErrorHandler);
+db();
+app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });
+module.exports = { handler: serverless(app) };
