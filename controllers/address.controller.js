@@ -3,25 +3,8 @@ const Address = require("../models/address.model");
 // Create a new Address
 exports.create = async (req, res) => {
     try {
-        const {
-            userId,
-            billTo,
-            completeAddress,
-            mobile,
-            houseNumber,
-            addressType,
-            pincode,
-        } = req.body;
-        const address = new Address({
-            billTo,
-            completeAddress,
-            userId,
-            mobile,
-            houseNumber,
-            addressType,
-            pincode,
-            userId,
-        });
+        const { userId, billTo, completeAddress, mobile, houseNumber, addressType, pincode, } = req.body;
+        const address = new Address({ billTo, completeAddress, userId, mobile, houseNumber, addressType, pincode, userId, });
         await address.save();
         res.status(201).json({ message: "address added ", data: address });
     } catch (error) {

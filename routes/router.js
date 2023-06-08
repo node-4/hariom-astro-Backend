@@ -11,7 +11,7 @@ router.use("/product", require("./product"));
 router.use("/astrocallhistory", require("./astrocallRouter"));
 router.use("/discount", require("./discountRouter"));
 router.use("/chat", require("./chatHistory"));
-// router.use("/agora", require("./agoreRouter."));
+router.use("/api/v1", require("./categoryRoute"));
 router.use("/api/v1", require("./product-category"));
 router.use("/api/v1", require("./profile.route"));
 router.use("/api/v1", require("./followRoutes"));

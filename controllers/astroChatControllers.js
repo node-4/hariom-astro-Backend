@@ -1,16 +1,5 @@
-
-
-
-
-
-
-
-
 const chatDb = require('../models/chathistory');
 const users = require('../models/User');
-
-
-
 exports.AddChatHistory = async(req,res) => {
     try{
 const userData = await users.findById({_id : req.body.userId});

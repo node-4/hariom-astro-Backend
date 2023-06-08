@@ -18,9 +18,7 @@ const createAstrologerLiveSchedule = async (req, res) => {
 const getAllAstrologerLiveSchedules = async (req, res) => {
     try {
         const astrologerId = req.params.astrologerId;
-        const astrologerLiveSchedules = await AstrologerLiveSchedule.find({
-            astrologerId,
-        }).lean();
+        const astrologerLiveSchedules = await AstrologerLiveSchedule.find({astrologerId,});
         res.status(200).json({ data: astrologerLiveSchedules });
     } catch (error) {
         res.status(500).json({ message: error.message });
