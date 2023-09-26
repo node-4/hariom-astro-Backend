@@ -53,17 +53,17 @@ exports.addNotification = async (req, res) => {
         if (!req.body.message) {
             res.status(400).json({ message: "message is required" });
         }
-        if(req.body.sendTo == "astro"){
+        if (req.body.sendTo == "astro") {
             req.body.astrologerId = req.body.userid;
         }
-        if(req.body.sendTo == "user"){
+        if (req.body.sendTo == "user") {
             req.body.userId = req.body.userid;
         }
         const notification = await Notification.create(req.body);
-        res.status(200).json({message: "Notification added successfully",data: notification,});
+        res.status(200).json({ message: "Notification added successfully", data: notification, });
     } catch (err) {
         console.log(err);
-        res.status(400).json({message: err.message,});
+        res.status(400).json({ message: err.message, });
     }
 };
 
@@ -71,7 +71,7 @@ exports.sendNotification = async (req, res) => {
     try {
         const user = await User.find({ ActiveNotification: true });
         console.log(user);
-        res.send({message: "All the users who have opted to receive notifications",data: user,});
+        return res.send({ message: "All the users who have opted to receive notifications", data: user, });
     } catch (err) {
         console.log(err);
         res.status(400).json({
@@ -85,9 +85,9 @@ exports.getAllNotifications = async (req, res) => {
         const queryObj = { ...req.query };
         const notifications = await Notification.find(queryObj).lean().sort("-created");
         if (notifications.length === 0) {
-            return res.status(404).json({message: "No notifications found",});
+            return res.status(404).json({ message: "No notifications found", });
         }
-        res.status(200).json({data: notifications,});
+        res.status(200).json({ data: notifications, });
     } catch (err) {
         res.status(500).json({
             status: "Failed",
@@ -100,9 +100,9 @@ exports.getNotificationById = async (req, res) => {
         const notification = await Notification.findById(req.params.id).lean();
 
         if (!notification) {
-            return res.status(404).json({message: "No notification found",});
+            return res.status(404).json({ message: "No notification found", });
         }
-        res.status(200).json({data: notification,});
+        res.status(200).json({ data: notification, });
     } catch (err) {
         res.status(500).json({
             message: err.message,

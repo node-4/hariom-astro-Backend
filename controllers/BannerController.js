@@ -4,15 +4,15 @@ const ObjectId = require("mongodb").ObjectID;
 //pos Banner--
 module.exports.addBanner = async (req, res) => {
   try {
-      const addBanner = await Banner.create({
-        desc: req.body.desc,
-        link: req.body.link
-      });
-      res.status(200).json({
-        msg: "Banner successfully added",
-        data: addBanner,
-        status: true,
-      });
+    const addBanner = await Banner.create({
+      desc: req.body.desc,
+      link: req.body.link
+    });
+    res.status(200).json({
+      msg: "Banner successfully added",
+      data: addBanner,
+      status: true,
+    });
   } catch (error) {
     res.status(400).json({
       message: err.message
@@ -57,7 +57,7 @@ module.exports.deleteBanner = async (req, res) => {
       status: true,
     });
   } catch (error) {
-    res.send(500).json({
+    return res.send(500).json({
       status: "Failed",
       message: error.message,
     });
