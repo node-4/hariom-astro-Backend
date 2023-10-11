@@ -59,7 +59,7 @@ exports.register = async (req, res) => {
         const { mobile } = req.body;
         const mobileExists = await User.findOne({ mobile });
         if (mobileExists) {
-            return res.status(401).json({message: "Mobile Number Already Exists",});
+            return res.status(401).json({ message: "Mobile Number Already Exists", });
         }
         const otp = Math.floor(1000 + Math.random() * 9000);
         const user = await User.create({ mobile, otp });
@@ -134,35 +134,35 @@ exports.verifyOTPSignedIn = async (req, res, next) => {
 };
 
 // SignIn
-module.exports.login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        // console.log(email);
-        // console.log(password)
-        if (!(email && password)) {
-            res.status(403).send("All input is required");
-        }
+// module.exports.login = async (req, res) => {
+//     try {
+//         const { email, password } = req.body;
+//         // console.log(email);
+//         // console.log(password)
+//         if (!(email && password)) {
+//             res.status(403).send("All input is required");
+//         }
 
-        const user = await User.findOne({ email });
-        console.log(user);
+//         const user = await User.findOne({ email });
+//         console.log(user);
 
-        if (!user)
-            res.status(402).json({
-                message: "This Number is not registered",
-            });
-        const isPassword = bcrypt.compareSync(password, user.password);
-        if (isPassword) {
-            jwt.sign({ id: user._id }, JWTkey, (err, token) => {
-                if (err) return res.status(401).send("Invalid Credentials");
-                console.log(token);
-                return res.status(200).send({ user, token });
-            });
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(400).json({ message: err.message });
-    }
-};
+//         if (!user)
+//             res.status(402).json({
+//                 message: "This Number is not registered",
+//             });
+//         const isPassword = bcrypt.compareSync(password, user.password);
+//         if (isPassword) {
+//             jwt.sign({ id: user._id }, JWTkey, (err, token) => {
+//                 if (err) return res.status(401).send("Invalid Credentials");
+//                 console.log(token);
+//                 return res.status(200).send({ user, token });
+//             });
+//         }
+//     } catch (err) {
+//         console.log(err);
+//         res.status(400).json({ message: err.message });
+//     }
+// };
 
 exports.protect = catchAsync(async (req, res, next) => {
     // 1) Getting Token & check if its there!
@@ -414,7 +414,7 @@ exports.signup2 = async function (req, res) {
     } = req.body;
     try {
         const otpGenerated = Math.floor(100 + Math.random() * 9000);
-        const user = await User.findByIdAndUpdate( id,{highestQualification,collegeOrInstitute,passingYear,govDocument,experience,skills,otp: otpGenerated,},{ new: true });
+        const user = await User.findByIdAndUpdate(id, { highestQualification, collegeOrInstitute, passingYear, govDocument, experience, skills, otp: otpGenerated, }, { new: true });
         res.status(200).json({ userId: user._id, otp: otpGenerated });
     } catch (error) {
         console.log(error);
